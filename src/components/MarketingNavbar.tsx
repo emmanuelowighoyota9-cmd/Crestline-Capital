@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from './Icons';
 import { useState } from 'react';
