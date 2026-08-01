@@ -5,12 +5,14 @@
   "description": "Crestline Capital — Digital wealth management platform",
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && next build",
-    "start": "npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && next start -p $PORT",
+    "build": "next build",
+    "start": "next start -p $PORT",
     "lint": "next lint",
     "db:push": "npx prisma db push",
     "db:seed": "npx tsx prisma/seed.ts",
-    "db:studio": "npx prisma studio"
+    "db:studio": "npx prisma studio",
+    "render:build": "npm install && npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && npm run build",
+    "render:start": "npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && npm start"
   },
   "dependencies": {
     "next": "^14.2.0",
