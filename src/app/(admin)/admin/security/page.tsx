@@ -1,0 +1,28 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { ShieldCheckIcon } from '@/components/Icons';
+
+interface SecurityLog { id: string; event: string; ipAddress: string; severity: string; createdAt: string; user?: { email: string; firstName: string; lastName: string } }
+
+interface AuditLog { id: string; action: string; details: string; createdAt: string; admin: { email: string; firstName: string; lastName: string } }
+
+export default function AdminSecurityPage() {
+  const [securityLogs, setSecurityLogs] = useState<SecurityLog[]>([]);
+  const [auditLogs, setAuditLogs] = useState<AuditLog[]>([]);
+  const [failedLogins, setFailedLogins] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [tab, setTab] = useState<'security' | 'audit'>('security');
+
+  useEffect(() => { fetch('/api/admin/security').then(r => r.json()).then(d => { setSecurityLogs(d.securityLogs || []); setAuditLogs(d.auditLogs || []); setFailedLogins(d.failedLogins24h || 0); setLoading(false); }); }, []);
+
+  if (loading) return null;
+
+  const criticalCount = securityLogs.filter(l => l.severity === 'critical').length;
+
+  return (<div className="space-y-6"><div className="flex items-center justify-between"><h1 className="text-2xl font-bold text-white">Security Center</h1></div>
+    <div className="grid gap-4 sm:grid-cols-3"><div className="rounded-2xl border border-red-500/10 bg-slate-900/50 p-6"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-red-400"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg><p className="mt-2 text-2xl font-bold text-red-400">{criticalCount}</p><p className="text-sm text-slate-400">Critical Alerts</p></div><div className="rounded-2xl border border-amber-500/10 bg-slate-900/50 p-6"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-5 w-5 text-amber-400"><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg><p className="mt-2 text-2xl font-bold text-amber-400">{failedLogins}</p><p className="text-sm text-slate-400">Failed Logins (24h)</p></div><div className="rounded-2xl border border-emerald-500/10 bg-slate-900/50 p-6"><ShieldCheckIcon className="h-5 w-5 text-emerald-400" /><p className="mt-2 text-2xl font-bold text-emerald-400">{auditLogs.length}</p><p className="text-sm text-slate-400">Audit Entries</p></div></div>
+    <div className="flex gap-2 border-b border-white/5 pb-2"><button onClick={() => setTab('security')} className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${tab === 'security' ? 'bg-amber-500/10 text-amber-400' : 'text-slate-400 hover:text-white'}`}>Security Logs</button><button onClick={() => setTab('audit')} className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${tab === 'audit' ? 'bg-amber-500/10 text-amber-400' : 'text-slate-400 hover:text-white'}`}>Audit Trail</button></div>
+    {tab === 'security' ? (<div className="rounded-2xl border border-white/5 bg-slate-900/50 overflow-hidden"><div className="overflow-x-auto"><table className="w-full"><thead><tr className="border-b border-white/5"><th className="text-left text-xs text-slate-500 px-6 py-4">Event</th><th className="text-left text-xs text-slate-500 px-6 py-4">User</th><th className="text-left text-xs text-slate-500 px-6 py-4">IP Address</th><th className="text-left text-xs text-slate-500 px-6 py-4">Severity</th><th className="text-left text-xs text-slate-500 px-6 py-4">Time</th></tr></thead><tbody>{securityLogs.map(log => (<tr key={log.id} className="border-b border-white/5 hover:bg-white/[0.02]"><td className="px-6 py-3 text-sm text-white">{log.event.replace(/_/g, ' ')}</td><td className="px-6 py-3 text-xs text-slate-400">{log.user ? `${log.user.firstName} ${log.user.lastName}` : '—'}</td><td className="px-6 py-3 text-xs text-slate-500 font-mono">{log.ipAddress}</td><td className="px-6 py-3"><span className={`text-xs px-2 py-0.5 rounded-full ${log.severity === 'critical' ? 'bg-red-500/10 text-red-400' : log.severity === 'warning' ? 'bg-amber-500/10 text-amber-400' : 'bg-slate-800 text-slate-400'}`}>{log.severity}</span></td><td className="px-6 py-3 text-xs text-slate-500">{new Date(log.createdAt).toLocaleString()}</td></tr>))}</tbody></table></div></div>) : (<div className="rounded-2xl border border-white/5 bg-slate-900/50 overflow-hidden"><div className="overflow-x-auto"><table className="w-full"><thead><tr className="border-b border-white/5"><th className="text-left text-xs text-slate-500 px-6 py-4">Admin</th><th className="text-left text-xs text-slate-500 px-6 py-4">Action</th><th className="text-left text-xs text-slate-500 px-6 py-4">Details</th><th className="text-left text-xs text-slate-500 px-6 py-4">Time</th></tr></thead><tbody>{auditLogs.map(log => (<tr key={log.id} className="border-b border-white/5 hover:bg-white/[0.02]"><td className="px-6 py-3 text-xs text-slate-400">{log.admin.email}</td><td className="px-6 py-3 text-xs text-white">{log.action.replace(/_/g, ' ')}</td><td className="px-6 py-3 text-xs text-slate-500 max-w-[200px] truncate">{log.details || '—'}</td><td className="px-6 py-3 text-xs text-slate-500">{new Date(log.createdAt).toLocaleString()}</td></tr>))}</tbody></table></div></div>)}
+  </div>);
+}
