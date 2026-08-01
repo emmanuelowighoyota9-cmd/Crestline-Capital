@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: crestline-capital
+    env: node
+    plan: free
+    buildCommand: npm install && npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && npx next build
+    startCommand: npx prisma db push && npx tsx prisma/seed.ts && npx next start -p $PORT
+    envVars:
+      - key: DATABASE_URL
+        value: file:./prisma/dev.db
+      - key: JWT_SECRET
+        value: crestline-capital-prod-secret-change-this-32-chars!!
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_EMAIL
+        value: admin@crestlinecapital.com
+      - key: ADMIN_PASSWORD
+        value: Admin@E86800
