@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShieldCheckIcon } from '../../../components/Icons';
+import { ShieldCheckIcon } from '../../../../components/Icons';
 
 interface SecurityLog { id: string; event: string; ipAddress: string; severity: string; createdAt: string; user?: { email: string; firstName: string; lastName: string } }
 interface AuditLog { id: string; action: string; details: string; createdAt: string; admin: { email: string; firstName: string; lastName: string } }
