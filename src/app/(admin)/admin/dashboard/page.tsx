@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { UsersIcon, BanknotesIcon, ArrowTrendingUpIcon, ShieldCheckIcon, CreditCardIcon } from '@/components/Icons';
+import { UsersIcon, BanknotesIcon, ArrowTrendingUpIcon, ShieldCheckIcon, CreditCardIcon } from '../../../components/Icons';
 
 interface Metrics { totalUsers: number; activeUsers: number; suspendedUsers: number; kycPending: number; totalAccounts: number; totalCards: number; totalDeposits: number; weeklyTransactions: number; }
 

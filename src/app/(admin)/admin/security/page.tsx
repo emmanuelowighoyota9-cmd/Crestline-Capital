@@ -1,10 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShieldCheckIcon } from '@/components/Icons';
+import { ShieldCheckIcon } from '../../../components/Icons';
 
 interface SecurityLog { id: string; event: string; ipAddress: string; severity: string; createdAt: string; user?: { email: string; firstName: string; lastName: string } }
-
 interface AuditLog { id: string; action: string; details: string; createdAt: string; admin: { email: string; firstName: string; lastName: string } }
 
 export default function AdminSecurityPage() {
@@ -17,7 +16,6 @@ export default function AdminSecurityPage() {
   useEffect(() => { fetch('/api/admin/security').then(r => r.json()).then(d => { setSecurityLogs(d.securityLogs || []); setAuditLogs(d.auditLogs || []); setFailedLogins(d.failedLogins24h || 0); setLoading(false); }); }, []);
 
   if (loading) return null;
-
   const criticalCount = securityLogs.filter(l => l.severity === 'critical').length;
 
   return (<div className="space-y-6"><div className="flex items-center justify-between"><h1 className="text-2xl font-bold text-white">Security Center</h1></div>
