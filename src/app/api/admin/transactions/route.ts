@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
-import { requireAdmin } from '@/lib/auth';
-import { generateReference } from '@/lib/utils';
+import { prisma } from '../../../lib/db';
+import { requireAdmin } from '../../../lib/auth';
+import { generateReference } from '../../../lib/utils';
 
 export async function GET() {
   try {
