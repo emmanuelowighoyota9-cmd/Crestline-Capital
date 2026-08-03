@@ -1,8 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
-import { requireAuth } from '@/lib/auth';
+import { prisma } from '../../../lib/db';
+import { requireAuth } from '../../../lib/auth';
 
 export async function POST(request: NextRequest, { params }: { params: { action: string } }) {
   try {
