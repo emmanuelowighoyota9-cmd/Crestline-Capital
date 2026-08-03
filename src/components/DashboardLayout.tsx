@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { BanknotesIcon, CreditCardIcon, ChartBarIcon, ArrowTrendingUpIcon, ArrowPathIcon, CogIcon, ShieldCheckIcon, Bars3Icon, XMarkIcon } from '@/components/Icons';
+import { BanknotesIcon, CreditCardIcon, ChartBarIcon, ArrowTrendingUpIcon, ArrowPathIcon, CogIcon, ShieldCheckIcon, Bars3Icon, XMarkIcon } from './Icons';
 
 type User = { id: string; email: string; firstName: string; lastName: string; role: string };
 

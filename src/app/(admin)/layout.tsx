@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { ChartBarIcon, ArrowTrendingUpIcon, UsersIcon, ShieldCheckIcon, Bars3Icon, XMarkIcon } from '@/components/Icons';
+import { ChartBarIcon, ArrowTrendingUpIcon, UsersIcon, ShieldCheckIcon, Bars3Icon, XMarkIcon } from '../../components/Icons';
 
 type AdminUser = { id: string; email: string; firstName: string; lastName: string; role: string };
 
