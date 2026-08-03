@@ -1,7 +1,8 @@
 'use client';
+
 import Link from 'next/link';
 import { useState } from 'react';
-import { ShieldCheckIcon } from '@/components/Icons';
+import { ShieldCheckIcon } from '../components/Icons';
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', password: '' });
