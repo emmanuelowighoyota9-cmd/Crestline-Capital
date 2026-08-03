@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowTrendingUpIcon, CogIcon } from '../../../components/Icons';
+import { ArrowTrendingUpIcon, CogIcon } from '../../../../components/Icons';
 
 interface Portfolio { id: string; name: string; totalInvested: number; currentValue: number; returns: number; assetAllocation: Record<string, number>; autoDeposit: boolean; autoDepositAmt: number; }
 

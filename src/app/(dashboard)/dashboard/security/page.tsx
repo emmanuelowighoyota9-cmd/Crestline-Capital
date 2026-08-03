@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShieldCheckIcon, LockClosedIcon, CheckBadgeIcon } from '../../../components/Icons';
+import { ShieldCheckIcon, LockClosedIcon, CheckBadgeIcon } from '../../../../components/Icons';
 
 export default function SecurityPage() {
   const [loading, setLoading] = useState(true);
