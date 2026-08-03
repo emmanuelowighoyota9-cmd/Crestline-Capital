@@ -3,8 +3,9 @@ services:
     name: crestline-capital
     env: node
     plan: free
-    buildCommand: npm install && npx prisma generate && npx prisma db push && npx tsx prisma/seed.ts && npx next build
+    buildCommand: npm install && npx prisma generate && next build
     startCommand: npx prisma db push && npx tsx prisma/seed.ts && npx next start -p $PORT
+    healthCheckPath: /login
     envVars:
       - key: DATABASE_URL
         value: file:./prisma/dev.db
